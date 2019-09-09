@@ -3,7 +3,6 @@
 
 #Yeah, we need this shit
 import sys
-import danodemano_anovapy
 import argparse
 import json
 import time
@@ -16,6 +15,34 @@ secret = 'yyyyyyyyyyyyyy'
 #Setup the logging - depending on your setup this may need adjusted
 logging.basicConfig(filename='/var/log/anova_control.log', filemode='a', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logging.info('Script started')
+
+def install(package):
+    """Install necessary package(s)."""
+    for pkg in package:
+        print('Installing %s', pkg)
+        subprocess.call([sys.executable, "-m", "pip", "install", pkg])
+
+
+def need(what):
+    print("Error unable to import the module `%s', please pip install it" % what, end='')
+    if (hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix)):
+        print(" from WITHIN your virtual environment", end='')
+    print(".\n")
+    sys.exit(1)
+
+try:
+    import danodemano_anovapy
+
+except ImportError:
+    print("Missing danodemano_anovapy!")
+    install(['danodemano_anovapy'])
+
+    try:
+        import danodemano_anovapy
+
+    except ImportError:
+        need('danodemano_anovapy')
+
 
 #Used to properly parse the JSON output - this handles nulls in the data
 def dictator(data, path=None, default=None, checknone=False):
