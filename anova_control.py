@@ -3,7 +3,7 @@
 
 #Yeah, we need this shit
 import sys
-import anova
+import danodemano_anovapy
 import argparse
 import json
 import time
@@ -121,7 +121,7 @@ if __name__ == '__main__':
 	logging.info('Output type is: %s', o)
 	
 	#Set up the connection to the cooker_id
-	cooker = anova.AnovaCooker(cooker_id, secret)
+	cooker = danodemano_anovapy.AnovaCooker(cooker_id, secret)
 	
 	#Get the current cooker status
 	cooker_status=cooker.get_status()
