@@ -9,7 +9,7 @@ from typing import Union
 import time
 import requests
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 class AnovaCooker:
